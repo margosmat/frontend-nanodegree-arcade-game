@@ -1,11 +1,14 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function([speed, lane]) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.speed = speed;
+    this.x = -101;
+    this.y = 58 + lane * 82;
 };
 
 // Update the enemy's position, required method for game
@@ -14,6 +17,11 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += this.speed * dt * 100;
+    if(this.x > 505)
+    {
+        allEnemies[allEnemies.indexOf(this)] = new Enemy(getEnemyParameters());
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -29,7 +37,7 @@ function Player() {
     this.x = 202;
     this.y = 380;
     this.update = function () {
-
+        
     };
     this.render = function () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -58,9 +66,9 @@ function Player() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-for(let i = 0; i < 6; i++)
+for(let i = 0; i < 3; i++)
 {
-    allEnemies[i] = new Enemy();
+    allEnemies[i] = new Enemy(getEnemyParameters());
 }
 let player = new Player();
 
@@ -74,6 +82,14 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-    console.log('hello');
+    
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+//This function returns random Enemy parameters
+//First parameter is Enemy speed factor
+//Second parameter is Enemy lane
+function getEnemyParameters() {
+    let parameters = [Math.pow((2 - Math.random()), 2), Math.floor(Math.random() * 3)];
+    return parameters;
+}
