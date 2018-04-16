@@ -26,7 +26,7 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 function Player() {
     this.sprite = 'images/char-boy.png';
-    this.x = 202.5;
+    this.x = 202;
     this.y = 380;
     this.update = function () {
 
@@ -34,8 +34,23 @@ function Player() {
     this.render = function () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
-    this.handleInput = function () {
-
+    this.handleInput = function (key) {
+        if(key === 'left')
+        {
+            this.x -= this.x < 101 ? 0 : 101;
+        }
+        else if(key === 'up')
+        {
+            this.y -= this.y < 10 ? 0 : 82;
+        }
+        else if(key === 'right')
+        {
+            this.x += this.x > 303 ? 0 : 101;
+        }
+        else if(key === 'down')
+        {
+            this.y += this.y > 360 ? 0 : 82;
+        }
     };
 }
 
@@ -59,6 +74,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
-    //player.handleInput(allowedKeys[e.keyCode]);
+    console.log('hello');
+    player.handleInput(allowedKeys[e.keyCode]);
 });
