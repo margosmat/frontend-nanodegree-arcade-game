@@ -22,7 +22,16 @@ Enemy.prototype.update = function(dt) {
     {
         allEnemies[allEnemies.indexOf(this)] = new Enemy(getEnemyParameters());
     }
+    if(this.checkCollisions())
+        player = new Player();
 };
+
+//This function checks collision
+//When Enemy and Player are close to each other it returns true
+Enemy.prototype.checkCollisions = function() {
+    if(Math.abs(this.x - player.x) < 80 && Math.abs(this.y - player.y) < 20) return true;
+    return false;
+}
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
