@@ -49,14 +49,18 @@ function Player() {
     this.y = 380;
     this.score = 0;
 
+    // Called every time interval
+    // Calls checkIfWon() function
     this.update = function () {
         this.checkIfWon();    
     };
 
+    // Renders the Player
     this.render = function () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
 
+    // Handles the input and moves the Player
     this.handleInput = function (key) {
         if(key === 'left')
         {
@@ -76,6 +80,7 @@ function Player() {
         }
     };
 
+    // Checks if won the game
     this.checkIfWon = function () {
         if(this.y < 10) {
             this.score++;
