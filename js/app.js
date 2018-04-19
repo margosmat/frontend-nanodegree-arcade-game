@@ -22,8 +22,10 @@ Enemy.prototype.update = function(dt) {
     {
         allEnemies[allEnemies.indexOf(this)] = new Enemy(getEnemyParameters());
     }
-    if(this.checkCollisions())
+    if(this.checkCollisions()) {
         player = new Player();
+        document.getElementById('score').innerText = '0';
+    }
 };
 
 //This function checks collision
@@ -45,12 +47,16 @@ function Player() {
     this.sprite = 'images/char-boy.png';
     this.x = 202;
     this.y = 380;
+    this.score = 0;
+
     this.update = function () {
-        
+        this.checkIfWon();    
     };
+
     this.render = function () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
+
     this.handleInput = function (key) {
         if(key === 'left')
         {
@@ -69,6 +75,15 @@ function Player() {
             this.y += this.y > 360 ? 0 : 82;
         }
     };
+
+    this.checkIfWon = function () {
+        if(this.y < 10) {
+            this.score++;
+            document.getElementById('score').innerText = this.score;
+            this.x = 202;
+            this.y = 380;
+        }
+    }
 }
 
 // Now instantiate your objects.
